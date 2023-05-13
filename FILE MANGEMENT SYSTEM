@@ -1,0 +1,70 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    FILE *filePointer;
+    char filename[50];
+    int choice;
+
+    while(1) {
+        printf("\n\nFile Management System\n");
+        printf("1. Create a file\n");
+        printf("2. Delete a file\n");
+        printf("3. Modify a file\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                printf("Enter the name of the file to create: ");
+                scanf("%s", filename);
+                filePointer = fopen(filename, "w");
+                if(filePointer == NULL) {
+                    printf("Failed to create the file.\n");
+                }
+                else {
+                    printf("File created successfully.\n");
+                    fclose(filePointer);
+                }
+                break;
+
+            case 2:
+                printf("Enter the name of the file to delete: ");
+                scanf("%s", filename);
+                if(remove(filename) == 0) {
+                    printf("File deleted successfully.\n");
+                }
+                else {
+                    printf("Failed to delete the file.\n");
+                }
+                break;
+
+            case 3:
+                printf("Enter the name of the file to modify: ");
+                scanf("%s", filename);
+                filePointer = fopen(filename, "a");
+                if(filePointer == NULL) {
+                    printf("Failed to open the file.\n");
+                }
+                else {
+                    printf("Enter the text to append to the file: ");
+                    char input[100];
+                    scanf("%s", input);
+                    fprintf(filePointer, "%s", input);
+                    fclose(filePointer);
+                    printf("File modified successfully.\n");
+                }
+                break;
+
+            case 4:
+                exit(0);
+
+            default:
+                printf("Invalid choice.\n");
+                break;
+        }
+    }
+
+    return 0;
+}
